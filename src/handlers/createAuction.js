@@ -17,7 +17,7 @@ async function createAuction(event, context) {
   // Creates a new auction, or replaces an old auction with a new auction
   await dynamodb
     .put({
-      TableName: "AuctionsTable",
+      TableName: process.env.AUCTIONS_TABLE_NAME,
       Item: auction,
     })
     .promise();
