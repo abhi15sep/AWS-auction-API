@@ -12,14 +12,6 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: eu-west-1
 
-functions:
-  createAuction:
-    handler: src/handlers/createAuction.handler
-    events:
-      - http:
-          method: POST
-          path: /auction
-
 resources:
   Resources:
     AuctionsTable:
@@ -33,3 +25,11 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+
+functions:
+  createAuction:
+    handler: src/handlers/createAuction.handler
+    events:
+      - http:
+          method: POST
+          path: /auction
