@@ -9,13 +9,13 @@ async function createAuction(event, context) {
 
   const auction = {
     id: uuid(),
-    title: title,
+    title,
     status: "OPEN",
     createdAt: now.toISOString(),
   };
 
   // Creates a new auction, or replaces an old auction with a new auction
-  dynamodb
+  await dynamodb
     .put({
       TableName: "AuctionsTable",
       Item: auction,
@@ -24,7 +24,7 @@ async function createAuction(event, context) {
 
   return {
     statusCode: 201,
-    body: JSON.stringify({ auction }),
+    body: JSON.stringify(auction),
   };
 }
 
