@@ -7,6 +7,9 @@ import createError from "http-errors";
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
+// @desc      Get all auctions
+// @route     GET /auctions
+// @access    Public
 async function getAuction(event, context) {
   let auctions;
 
