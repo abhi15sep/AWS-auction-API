@@ -31,10 +31,9 @@ export async function getAuctionById(id) {
 // @route     GET /auction
 // @access    Public
 async function getAuction(event, context) {
-  let auction;
   const { id } = event.pathParameters;
   const auction = await getAuctionById(id);
-  
+
   return {
     statusCode: 200,
     body: JSON.stringify(auction),
