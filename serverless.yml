@@ -58,7 +58,7 @@ functions:
   processAuctions:
     handler: src/handlers/processAuctions.handler
     # events:
-    #  - schedule: rate(1 minute)
+    #   - schedule: rate(1 minute)
 
 custom:
   authorizer: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:serverless-auth0-authorizer-${self:provider.stage}-auth
