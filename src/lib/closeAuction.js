@@ -21,7 +21,22 @@ export async function closeAuction(auction) {
   const { title, seller, highestBid } = auction;
   const { amount, bidder } = highestBid;
 
-  // Notify user that created the auction that item has been sold via email
+  // Notify seller that the item was not sold via email
+  if (amount === 0) {
+    await sqs
+      .sendMessage({
+        QueueUrl: process.env.MAIL_QUEUE_URL,
+        MessageBody: JSON.stringify({
+          subject: "No bids on your auction item :( ",
+          recipient: seller,
+          body: `Oh no! Your item "${title}" didn't get any bids. It is what it is ¯\_(ツ)_/¯  better luck next time`,
+        }),
+      })
+      .promise();
+    return;
+  }
+
+  // Notify seller that the item has sold via email
   const notifySeller = sqs
     .sendMessage({
       QueueUrl: process.env.MAIL_QUEUE_URL,
@@ -33,7 +48,7 @@ export async function closeAuction(auction) {
     })
     .promise();
 
-  // Notify user that they won the auction via email
+  // Notify buyer that they won the auction via email
   const notifyBidder = sqs
     .sendMessage({
       QueueUrl: process.env.MAIL_QUEUE_URL,
