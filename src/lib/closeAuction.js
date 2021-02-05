@@ -33,7 +33,7 @@ export async function closeAuction(auction) {
     })
     .promise();
 
-  // Notify user that won the auction via email
+  // Notify user that they won the auction via email
   const notifyBidder = sqs
     .sendMessage({
       QueueUrl: process.env.MAIL_QUEUE_URL,
@@ -45,5 +45,5 @@ export async function closeAuction(auction) {
     })
     .promise();
 
-  return Promise.all(notifySeller, notifyBidder);
+  return Promise.all([notifySeller, notifyBidder]);
 }
